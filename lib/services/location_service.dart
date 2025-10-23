@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
-import 'package:health_care/domain/entities/geo_location.dart';
+import 'package:health_care/entities/geo_location.dart';
 
 /// Minimal service with no DI or repositories.
 class LocationService {

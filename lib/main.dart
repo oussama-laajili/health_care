@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:health_care/ui/location_page.dart';
+import 'package:health_care/ui/launding_screen.dart/launching_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,8 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const LocationPage(),
+      home: const LaunchingScreen(),
     );
   }
 }
- 

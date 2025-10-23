@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:health_care/domain/entities/geo_location.dart';
+import 'package:health_care/entities/geo_location.dart';
 import 'package:health_care/services/location_service.dart';
 
 class LocationPage extends StatefulWidget {
