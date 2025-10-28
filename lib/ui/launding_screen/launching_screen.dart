@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../constants/styles.dart';
+import '../login_screen/login_screen.dart';
+import '../../shared/extensions/loader_extension.dart';
 
 class LaunchingScreen extends StatefulWidget {
   const LaunchingScreen({super.key});
@@ -145,8 +147,22 @@ class _LaunchingScreenState extends State<LaunchingScreen>
                           width: 180,
                           height: 48,
                           child: ElevatedButton(
-                            onPressed: () {
-                              // TODO: navigate to next screen
+                            onPressed: () async {
+                              context.showLoader();
+
+                              // Wait for at least 3 seconds
+                              await Future.delayed(const Duration(seconds: 3));
+
+                              context.hideLoader();
+
+                              if (mounted) {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const LoginScreen(),
+                                  ),
+                                );
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppStyles.secondaryColor,
