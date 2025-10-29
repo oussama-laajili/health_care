@@ -4,6 +4,7 @@ import 'package:health_care/ui/login_screen/login_provider.dart';
 import 'package:provider/provider.dart';
 import '../../constants/styles.dart';
 import '../../providers/loader_provider.dart';
+import '../home_screen/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -37,18 +38,29 @@ class _LoginScreenState extends State<LoginScreen> {
         _passwordController.text,
       );
 
-      loaderProvider.hide();
+      // Don't hide loader here - let the home screen hide it after data loads
 
       if (success && mounted) {
-        // Navigate to home screen or next page
+        // Navigate to home screen
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Welcome ${loginProvider.currentUserEmail}!'),
             backgroundColor: AppStyles.secondaryColor,
+            duration: const Duration(seconds: 1),
           ),
         );
-        // TODO: Navigate to home screen
-        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomeScreen()));
+
+        // Navigate to home screen after a brief delay
+        await Future.delayed(const Duration(milliseconds: 500));
+        if (mounted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (_) => const HomeScreen()),
+          );
+        }
+      } else {
+        // Hide loader only on failure
+        loaderProvider.hide();
       }
     }
   }
@@ -303,44 +315,44 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 24),
 
                   // Test credentials hint
-                  // Container(
-                  //   padding: const EdgeInsets.all(16),
-                  //   decoration: BoxDecoration(
-                  //     color: AppStyles.accentPurple.withValues(alpha: 0.1),
-                  //     borderRadius: BorderRadius.circular(12),
-                  //     border: Border.all(
-                  //         color: AppStyles.accentPurple.withValues(alpha: 0.3)),
-                  //   ),
-                  //   child: Column(
-                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                  //     children: [
-                  //       Text(
-                  //         'Test Credentials:',
-                  //         style: GoogleFonts.poppins(
-                  //           fontWeight: FontWeight.w600,
-                  //           fontSize: 13,
-                  //           color: AppStyles.accentPurple,
-                  //         ),
-                  //       ),
-                  //       const SizedBox(height: 8),
-                  //       Text(
-                  //         'Email: admin@test.com\nPassword: admin123',
-                  //         style: GoogleFonts.poppins(
-                  //           fontSize: 12,
-                  //           color: Colors.grey[700],
-                  //         ),
-                  //       ),
-                  //       const SizedBox(height: 4),
-                  //       Text(
-                  //         'Or: user@test.com / user123',
-                  //         style: GoogleFonts.poppins(
-                  //           fontSize: 12,
-                  //           color: Colors.grey[700],
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: AppStyles.accentPurple.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                          color: AppStyles.accentPurple.withValues(alpha: 0.3)),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Test Credentials:',
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 13,
+                            color: AppStyles.accentPurple,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'Email: admin@test.com\nPassword: admin123',
+                          style: GoogleFonts.poppins(
+                            fontSize: 12,
+                            color: Colors.grey[700],
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Or: user@test.com / user123',
+                          style: GoogleFonts.poppins(
+                            fontSize: 12,
+                            color: Colors.grey[700],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),

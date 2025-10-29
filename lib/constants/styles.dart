@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppStyles {
   // Theme: green, white and purple
   static const Color primaryColor = Color(0xFFFFFFFF); // white background
-  static const Color secondaryColor = Color(0xFF78C841); // green accent
+  static const Color secondaryColor = Color(0xFF3A6F43); // green accent
   static const Color accentPurple = Color(0xFF6A4BCF); // purple accent
   static const Color darkColor =
       Color(0xFF1B2330); // dark text/background contrast

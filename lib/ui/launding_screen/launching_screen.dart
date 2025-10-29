@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../../constants/styles.dart';
 import '../login_screen/login_screen.dart';
-import '../../shared/extensions/loader_extension.dart';
+import '../../providers/loader_provider.dart';
 
 class LaunchingScreen extends StatefulWidget {
   const LaunchingScreen({super.key});
@@ -148,21 +149,26 @@ class _LaunchingScreenState extends State<LaunchingScreen>
                           height: 48,
                           child: ElevatedButton(
                             onPressed: () async {
-                              context.showLoader();
+                              if (!mounted) return;
+
+                              final navigator = Navigator.of(context);
+                              final loaderProvider =
+                                  Provider.of<LoaderProvider>(context,
+                                      listen: false);
+
+                              loaderProvider.show();
 
                               // Wait for at least 3 seconds
                               await Future.delayed(const Duration(seconds: 3));
 
-                              context.hideLoader();
+                              if (!mounted) return;
+                              loaderProvider.hide();
 
-                              if (mounted) {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const LoginScreen(),
-                                  ),
-                                );
-                              }
+                              navigator.pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (context) => const LoginScreen(),
+                                ),
+                              );
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppStyles.secondaryColor,

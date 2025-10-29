@@ -5,12 +5,16 @@ import '../../providers/loader_provider.dart';
 extension LoaderExtension on BuildContext {
   /// Show the global loader
   void showLoader() {
-    read<LoaderProvider>().show();
+    if (mounted) {
+      read<LoaderProvider>().show();
+    }
   }
 
   /// Hide the global loader
   void hideLoader() {
-    read<LoaderProvider>().hide();
+    if (mounted) {
+      read<LoaderProvider>().hide();
+    }
   }
 
   /// Execute an async function with loader shown
@@ -19,7 +23,9 @@ extension LoaderExtension on BuildContext {
     try {
       return await action();
     } finally {
-      hideLoader();
+      if (mounted) {
+        hideLoader();
+      }
     }
   }
 }

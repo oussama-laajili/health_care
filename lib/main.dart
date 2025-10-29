@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 
 import 'ui/login_screen/login_provider.dart';
 import 'providers/loader_provider.dart';
+import 'providers/pharmacy_provider.dart';
+import 'providers/doctor_provider.dart';
 import 'shared/widgets/global_loader.dart';
 
 void main() {
@@ -20,6 +22,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => LoginProvider()),
         ChangeNotifierProvider(create: (_) => LoaderProvider()),
+        ChangeNotifierProvider(create: (_) => PharmacyProvider()),
+        ChangeNotifierProvider(create: (_) => DoctorProvider()),
       ],
       child: MaterialApp(
         title: 'Health Care',
