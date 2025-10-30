@@ -35,28 +35,43 @@ class _HomeScreenState extends State<HomeScreen> {
 
     loaderProvider.show();
 
-    // Load both pharmacies and doctors in parallel
-    await Future.wait([
-      pharmacyProvider.searchNearby(radiusKm: 5.0, limit: 50),
-      doctorProvider.searchNearby(radiusKm: 10.0, limit: 50),
-    ]);
+    try {
+      // Load both pharmacies and doctors in parallel
+      await Future.wait([
+        pharmacyProvider.searchNearby(radiusKm: 5.0, limit: 50),
+        doctorProvider.searchNearby(radiusKm: 10.0, limit: 50),
+      ]);
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error loading data: $e'),
+            backgroundColor: Colors.red,
+            duration: const Duration(seconds: 5),
+          ),
+        );
+      }
+    }
 
     if (mounted) {
       loaderProvider.hide();
 
+      // Show specific error messages from providers
       if (pharmacyProvider.errorMessage != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(pharmacyProvider.errorMessage!),
+            content: Text('Pharmacy error: ${pharmacyProvider.errorMessage}'),
             backgroundColor: Colors.red,
+            duration: const Duration(seconds: 5),
           ),
         );
       }
       if (doctorProvider.errorMessage != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(doctorProvider.errorMessage!),
+            content: Text('Doctor error: ${doctorProvider.errorMessage}'),
             backgroundColor: Colors.red,
+            duration: const Duration(seconds: 5),
           ),
         );
       }

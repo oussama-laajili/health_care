@@ -67,6 +67,7 @@ flutter:
   # `assets/animations/launch.json` (or change the path below to match your
   # asset). Example:
   assets:
+    - assets/
     - assets/animations/
     
 

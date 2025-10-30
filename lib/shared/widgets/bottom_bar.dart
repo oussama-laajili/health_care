@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:health_care/constants/styles.dart';
 
-
 class AppBottomBar extends StatefulWidget {
   final List<String> icons;
   final int defaultSelectedIndex;
@@ -18,7 +17,8 @@ class AppBottomBar extends StatefulWidget {
   AppBottomBarState createState() => AppBottomBarState();
 }
 
-class AppBottomBarState extends State<AppBottomBar> with SingleTickerProviderStateMixin {
+class AppBottomBarState extends State<AppBottomBar>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
   late int _selectedIndex;
@@ -27,7 +27,8 @@ class AppBottomBarState extends State<AppBottomBar> with SingleTickerProviderSta
   void initState() {
     _selectedIndex = widget.defaultSelectedIndex;
     super.initState();
-    _controller = AnimationController(duration: Duration(milliseconds: 200), vsync: this);
+    _controller =
+        AnimationController(duration: Duration(milliseconds: 200), vsync: this);
     _animation = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
     _controller
       ..reset()
@@ -65,9 +66,9 @@ class AppBottomBarState extends State<AppBottomBar> with SingleTickerProviderSta
         ),
         boxShadow: [
           BoxShadow(
-            color: AppStyles.secondaryColor.withValues(alpha: 0.6),
-            blurRadius: 16,
-            offset: const Offset(0, 3),
+            color: AppStyles.secondaryColor.withValues(alpha: 0.3),
+            blurRadius: 20,
+            offset: const Offset(0, -2),
           ),
         ],
       ),
@@ -81,12 +82,15 @@ class AppBottomBarState extends State<AppBottomBar> with SingleTickerProviderSta
                 animation: _animation,
                 builder: (_, __) {
                   return Transform.translate(
-                    offset: _selectedIndex == index ? Offset(0, -_animation.value * 22) : Offset.zero,
+                    offset: _selectedIndex == index
+                        ? Offset(0, -_animation.value * 22)
+                        : Offset.zero,
                     child: InkWell(
                       customBorder: const CircleBorder(),
                       onTap: () => _updateIndex(index),
                       child: AnimatedContainer(
-                        padding: _selectedIndex == index ? EdgeInsets.all(16) : null,
+                        padding:
+                            _selectedIndex == index ? EdgeInsets.all(16) : null,
                         duration: Duration(milliseconds: 300),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
@@ -95,9 +99,8 @@ class AppBottomBarState extends State<AppBottomBar> with SingleTickerProviderSta
                             end: Alignment.bottomCenter,
                             colors: _selectedIndex == index
                                 ? [
-
-                              Color(0xFF4CAF50),
-                              Color(0xFF2196F3),
+                                    AppStyles.secondaryColor,
+                                    AppStyles.thirdColor
                                   ]
                                 : [
                                     Colors.transparent,
@@ -109,7 +112,9 @@ class AppBottomBarState extends State<AppBottomBar> with SingleTickerProviderSta
                           widget.icons[index],
                           width: _selectedIndex == index ? 30 : 27,
                           height: _selectedIndex == index ? 30 : 27,
-                          color: _selectedIndex == index ? AppStyles.secondaryColor : AppStyles.textColor,
+                          color: _selectedIndex == index
+                              ? AppStyles.primaryColor
+                              : AppStyles.textColor.withValues(alpha: 0.6),
                         ),
                       ),
                     ),

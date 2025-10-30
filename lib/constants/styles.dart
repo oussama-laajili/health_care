@@ -4,7 +4,8 @@ class AppStyles {
   // Theme: green, white and purple
   static const Color primaryColor = Color(0xFFFFFFFF); // white background
   static const Color secondaryColor = Color(0xFF3A6F43); // green accent
-  static const Color accentPurple = Color(0xFF6A4BCF); // purple accent
+  static const Color accentPurple = Color(0xFF6A4BCF);
+  static const Color thirdColor = Color(0xFF59AC77); // purple accent
   static const Color darkColor =
       Color(0xFF1B2330); // dark text/background contrast
   static const Color textColor = Color(0xFF0F1724); // primary text
