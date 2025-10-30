@@ -86,38 +86,83 @@ class PharmacyCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
 
-              // Distance
-              if (pharmacy.distanceKm != null)
+              const SizedBox(height: 4),
+
+              // Address
+              if (pharmacy.address != null)
                 Row(
                   children: [
                     Icon(
-                      Icons.location_on,
+                      Icons.place_outlined,
                       size: 12,
                       color: Colors.grey[600],
                     ),
                     const SizedBox(width: 4),
                     Expanded(
                       child: Text(
-                        '${pharmacy.distanceKm!.toStringAsFixed(2)} km',
+                        pharmacy.address!,
                         style: GoogleFonts.poppins(
-                          fontSize: 11,
+                          fontSize: 10,
+                          color: Colors.grey[600],
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+
+              if (pharmacy.address != null) const SizedBox(height: 4),
+
+              // Phone
+              if (pharmacy.phone != null)
+                Row(
+                  children: [
+                    Icon(
+                      Icons.phone,
+                      size: 12,
+                      color: Colors.grey[600],
+                    ),
+                    const SizedBox(width: 4),
+                    Expanded(
+                      child: Text(
+                        pharmacy.phone!,
+                        style: GoogleFonts.poppins(
+                          fontSize: 10,
                           color: Colors.grey[600],
                         ),
                       ),
                     ),
                   ],
                 ),
-              // Pharmacy name
-              Text(
-                pharmacy.name,
-                style: GoogleFonts.poppins(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                  color: AppStyles.textColor,
+
+              if (pharmacy.phone != null) const SizedBox(height: 4),
+
+              // Opening Hours
+              if (pharmacy.openingHours != null)
+                Row(
+                  children: [
+                    Icon(
+                      Icons.access_time,
+                      size: 12,
+                      color: Colors.grey[600],
+                    ),
+                    const SizedBox(width: 4),
+                    Expanded(
+                      child: Text(
+                        pharmacy.openingHours!,
+                        style: GoogleFonts.poppins(
+                          fontSize: 10,
+                          color: Colors.grey[600],
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
                 ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
+
+              if (pharmacy.openingHours != null) const SizedBox(height: 4),
 
               // Distance
               if (pharmacy.distanceKm != null)
@@ -125,17 +170,16 @@ class PharmacyCard extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.location_on,
-                      size: 14,
-                      color: Colors.grey[600],
+                      size: 12,
+                      color: AppStyles.secondaryColor,
                     ),
                     const SizedBox(width: 4),
-                    Expanded(
-                      child: Text(
-                        '${pharmacy.distanceKm!.toStringAsFixed(2)} km',
-                        style: GoogleFonts.poppins(
-                          fontSize: 12,
-                          color: Colors.grey[600],
-                        ),
+                    Text(
+                      '${pharmacy.distanceKm!.toStringAsFixed(2)} km away',
+                      style: GoogleFonts.poppins(
+                        fontSize: 11,
+                        color: AppStyles.secondaryColor,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],

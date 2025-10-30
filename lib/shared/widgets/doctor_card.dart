@@ -83,24 +83,114 @@ class DoctorCard extends StatelessWidget {
                   fontSize: 13,
                   color: AppStyles.textColor,
                 ),
-                maxLines: 1,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
 
+              const SizedBox(height: 4),
+
               // Specialty
               if (doctor.specialty != null)
-                Text(
-                  doctor.specialty!,
-                  style: GoogleFonts.poppins(
-                    fontSize: 11,
-                    color: AppStyles.accentPurple,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                Row(
+                  children: [
+                    Icon(
+                      Icons.medical_information,
+                      size: 12,
+                      color: AppStyles.accentPurple,
+                    ),
+                    const SizedBox(width: 4),
+                    Expanded(
+                      child: Text(
+                        doctor.specialty!,
+                        style: GoogleFonts.poppins(
+                          fontSize: 11,
+                          color: AppStyles.accentPurple,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
                 ),
 
-              const SizedBox(height: 4),
+              if (doctor.specialty != null) const SizedBox(height: 4),
+
+              // Address
+              if (doctor.address != null)
+                Row(
+                  children: [
+                    Icon(
+                      Icons.place_outlined,
+                      size: 12,
+                      color: Colors.grey[600],
+                    ),
+                    const SizedBox(width: 4),
+                    Expanded(
+                      child: Text(
+                        doctor.address!,
+                        style: GoogleFonts.poppins(
+                          fontSize: 10,
+                          color: Colors.grey[600],
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+
+              if (doctor.address != null) const SizedBox(height: 4),
+
+              // Phone
+              if (doctor.phone != null)
+                Row(
+                  children: [
+                    Icon(
+                      Icons.phone,
+                      size: 12,
+                      color: Colors.grey[600],
+                    ),
+                    const SizedBox(width: 4),
+                    Expanded(
+                      child: Text(
+                        doctor.phone!,
+                        style: GoogleFonts.poppins(
+                          fontSize: 10,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+              if (doctor.phone != null) const SizedBox(height: 4),
+
+              // Opening Hours
+              if (doctor.openingHours != null)
+                Row(
+                  children: [
+                    Icon(
+                      Icons.access_time,
+                      size: 12,
+                      color: Colors.grey[600],
+                    ),
+                    const SizedBox(width: 4),
+                    Expanded(
+                      child: Text(
+                        doctor.openingHours!,
+                        style: GoogleFonts.poppins(
+                          fontSize: 10,
+                          color: Colors.grey[600],
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+
+              if (doctor.openingHours != null) const SizedBox(height: 4),
 
               // Distance
               if (doctor.distanceKm != null)
@@ -109,16 +199,15 @@ class DoctorCard extends StatelessWidget {
                     Icon(
                       Icons.location_on,
                       size: 12,
-                      color: Colors.grey[600],
+                      color: AppStyles.secondaryColor,
                     ),
                     const SizedBox(width: 4),
-                    Expanded(
-                      child: Text(
-                        '${doctor.distanceKm!.toStringAsFixed(2)} km',
-                        style: GoogleFonts.poppins(
-                          fontSize: 11,
-                          color: Colors.grey[600],
-                        ),
+                    Text(
+                      '${doctor.distanceKm!.toStringAsFixed(2)} km away',
+                      style: GoogleFonts.poppins(
+                        fontSize: 11,
+                        color: AppStyles.secondaryColor,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],
