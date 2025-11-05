@@ -40,6 +40,13 @@ out center $limit;
     final data = jsonDecode(response.body) as Map<String, dynamic>;
     final elements = (data['elements'] as List<dynamic>?) ?? [];
 
+    print('=== PHARMACY DATA DEBUG ===');
+    print('Found ${elements.length} pharmacies');
+    if (elements.isNotEmpty) {
+      print('First pharmacy sample:');
+      print(jsonEncode(elements.first));
+    }
+
     final pharmacies = elements
         .map((e) => Pharmacy.fromOverpassJson(
               e as Map<String, dynamic>,

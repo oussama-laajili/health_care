@@ -15,24 +15,18 @@ class GlobalLoader extends StatelessWidget {
         child,
         Consumer<LoaderProvider>(
           builder: (context, loaderProvider, _) {
+            print('🎯 GlobalLoader: isLoading = ${loaderProvider.isLoading}');
             if (!loaderProvider.isLoading) {
               return const SizedBox.shrink();
             }
 
-            return Container(
-              color: Colors.black.withValues(alpha: 0.5),
-              child: Center(
-                child: Container(
-                  width: 150,
-                  height: 150,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Lottie.asset(
-                    'assets/animations/loader.json',
-                    fit: BoxFit.contain,
-                  ),
+            return Center(
+              child: SizedBox(
+                width: 120,
+                height: 120,
+                child: Lottie.asset(
+                  'assets/animations/loader.json',
+                  fit: BoxFit.contain,
                 ),
               ),
             );

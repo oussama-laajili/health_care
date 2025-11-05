@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../../constants/styles.dart';
 import '../../providers/pharmacy_provider.dart';
 import '../../providers/doctor_provider.dart';
-import '../../providers/loader_provider.dart';
+import '../../shared/extensions/loader_extension.dart';
 import 'widgets/nearby_pharmacies_widget.dart';
 import 'widgets/doctor_carousel.dart';
 import '../doctor/doctor_search_screen.dart';
@@ -31,51 +31,48 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final pharmacyProvider = context.read<PharmacyProvider>();
     final doctorProvider = context.read<DoctorProvider>();
-    final loaderProvider = context.read<LoaderProvider>();
 
-    loaderProvider.show();
+    await context.withLoader(() async {
+      try {
+        // Load both pharmacies and doctors in parallel
+        await Future.wait([
+          pharmacyProvider.searchNearby(radiusKm: 5.0, limit: 50),
+          doctorProvider.searchNearby(radiusKm: 10.0, limit: 50),
+        ]);
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Error loading data: $e'),
+              backgroundColor: Colors.red,
+              duration: const Duration(seconds: 5),
+            ),
+          );
+        }
+      }
 
-    try {
-      // Load both pharmacies and doctors in parallel
-      await Future.wait([
-        pharmacyProvider.searchNearby(radiusKm: 5.0, limit: 50),
-        doctorProvider.searchNearby(radiusKm: 10.0, limit: 50),
-      ]);
-    } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error loading data: $e'),
-            backgroundColor: Colors.red,
-            duration: const Duration(seconds: 5),
-          ),
-        );
+        // Show specific error messages from providers
+        if (pharmacyProvider.errorMessage != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Pharmacy error: ${pharmacyProvider.errorMessage}'),
+              backgroundColor: Colors.red,
+              duration: const Duration(seconds: 5),
+            ),
+          );
+        }
+        if (doctorProvider.errorMessage != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Doctor error: ${doctorProvider.errorMessage}'),
+              backgroundColor: Colors.red,
+              duration: const Duration(seconds: 5),
+            ),
+          );
+        }
       }
-    }
-
-    if (mounted) {
-      loaderProvider.hide();
-
-      // Show specific error messages from providers
-      if (pharmacyProvider.errorMessage != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Pharmacy error: ${pharmacyProvider.errorMessage}'),
-            backgroundColor: Colors.red,
-            duration: const Duration(seconds: 5),
-          ),
-        );
-      }
-      if (doctorProvider.errorMessage != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Doctor error: ${doctorProvider.errorMessage}'),
-            backgroundColor: Colors.red,
-            duration: const Duration(seconds: 5),
-          ),
-        );
-      }
-    }
+    });
   }
 
   @override

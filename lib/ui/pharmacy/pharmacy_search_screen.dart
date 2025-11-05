@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../constants/styles.dart';
 import '../../providers/pharmacy_provider.dart';
-import '../../providers/loader_provider.dart';
+import '../../shared/extensions/loader_extension.dart';
 
 class PharmacySearchScreen extends StatefulWidget {
   const PharmacySearchScreen({super.key});
@@ -23,12 +23,11 @@ class _PharmacySearchScreenState extends State<PharmacySearchScreen> {
   }
 
   Future<void> _searchNearby() async {
-    final loaderProvider = context.read<LoaderProvider>();
     final pharmacyProvider = context.read<PharmacyProvider>();
 
-    loaderProvider.show();
-    await pharmacyProvider.searchNearby(radiusKm: 5.0, limit: 50);
-    loaderProvider.hide();
+    await context.withLoader(() async {
+      await pharmacyProvider.searchNearby(radiusKm: 5.0, limit: 50);
+    });
 
     if (mounted && pharmacyProvider.errorMessage != null) {
       ScaffoldMessenger.of(context).showSnackBar(

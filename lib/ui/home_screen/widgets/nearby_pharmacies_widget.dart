@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../../constants/styles.dart';
 import '../../../providers/pharmacy_provider.dart';
-import '../../../providers/loader_provider.dart';
+import '../../../shared/extensions/loader_extension.dart';
 import '../../../shared/widgets/pharmacy_card.dart';
 import '../../pharmacy/pharmacy_search_screen.dart';
 
@@ -40,18 +40,15 @@ class NearbyPharmaciesWidget extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () async {
-                      // Show loader while navigating
-                      final loaderProvider = context.read<LoaderProvider>();
-                      loaderProvider.show();
-
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const PharmacySearchScreen(),
-                        ),
-                      );
-
-                      loaderProvider.hide();
+                      // Navigate with loader
+                      await context.withLoader(() async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const PharmacySearchScreen(),
+                          ),
+                        );
+                      });
                     },
                     child: Row(
                       children: [
@@ -95,18 +92,15 @@ class NearbyPharmaciesWidget extends StatelessWidget {
                     pharmacy: pharmacy,
                     imageHeight: 70, // Decreased height
                     onTap: () async {
-                      // Show loader while navigating
-                      final loaderProvider = context.read<LoaderProvider>();
-                      loaderProvider.show();
-
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const PharmacySearchScreen(),
-                        ),
-                      );
-
-                      loaderProvider.hide();
+                      // Navigate with loader
+                      await context.withLoader(() async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const PharmacySearchScreen(),
+                          ),
+                        );
+                      });
                     },
                   );
                 },

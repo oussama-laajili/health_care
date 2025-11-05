@@ -30,9 +30,10 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         ),
-        home: const GlobalLoader(
-          child: LaunchingScreen(),
-        ),
+        builder: (context, child) {
+          return GlobalLoader(child: child ?? Container());
+        },
+        home: const LaunchingScreen(),
       ),
     );
   }

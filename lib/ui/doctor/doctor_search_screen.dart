@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../constants/styles.dart';
 import '../../providers/doctor_provider.dart';
-import '../../providers/loader_provider.dart';
+import '../../shared/extensions/loader_extension.dart';
 import '../../shared/widgets/doctor_card.dart';
 
 class DoctorSearchScreen extends StatefulWidget {
@@ -27,22 +27,18 @@ class _DoctorSearchScreenState extends State<DoctorSearchScreen> {
     if (!mounted) return;
 
     final doctorProvider = context.read<DoctorProvider>();
-    final loaderProvider = context.read<LoaderProvider>();
 
-    loaderProvider.show();
-    await doctorProvider.searchNearby(radiusKm: 10.0, limit: 50);
+    await context.withLoader(() async {
+      await doctorProvider.searchNearby(radiusKm: 10.0, limit: 50);
+    });
 
-    if (mounted) {
-      loaderProvider.hide();
-
-      if (doctorProvider.errorMessage != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(doctorProvider.errorMessage!),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
+    if (mounted && doctorProvider.errorMessage != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(doctorProvider.errorMessage!),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
